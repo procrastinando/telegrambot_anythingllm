@@ -54,31 +54,23 @@ The bot's functionality relies on the following files within the [procrastinando
     Create a file named `docker-compose.yml` in the same directory with the following content:
 
     ```yaml
-    version: '3.8' # Specify a Docker Compose version
-
     services:
       pgche_telegrambot:
         build:
-          context: https://github.com/procrastinando/telegrambot_anythingllm.git#main
-          # This builds the image using the Dockerfile from the main branch of the specified GitHub repository.
-        image: procrastinando/pgche_bot:latest # Optional: Name and tag for the built image
+          context: https://github.com/procrastinando/telegrambot_anythingllm.git#main 
+        image: procrastinando/pgche_bot:latest # Example image name and tag
         container_name: pgche_bot_container
-        volumes:
-          # The volume 'pgche:/app' mounts a named volume 'pgche' to '/app' in the container.
-          # For this application, this might be intended for development to see code changes
-          # without rebuilding (if app.py was copied from host), or if the app writes
-          # persistent data to /app (which this script doesn't seem to do).
-          # If not needed for persistence or live code reloading, this volume can be removed.
-          # For a bot built from a Git repo, changes to app.py require an image rebuild.
-          - pgche_data:/app/data # Example: if your bot needs to store some persistent data in a 'data' subfolder
         environment:
-          # These variables are sourced from the .env file by default.
-          # The app.py script expects these environment variables to be set.
-          TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-          ANYTHINGLLM_SERVER_URL: ${ANYTHINGLLM_SERVER_URL}
-          ANYTHINGLLM_ADMIN_API_KEY: ${ANYTHINGLLM_ADMIN_API_KEY}
-          ANYTHINGLLM_WORKSPACE_SLUG: ${ANYTHINGLLM_WORKSPACE_SLUG}
-          WELCOME_MESSAGE: ${WELCOME_MESSAGE} # Example of using an additional env var
+          - PYTHONUNBUFFERED="1" # <--- ADD THIS LINE
+          # These variables will be sourced from a .env file in the same directory
+          # as this docker-compose.yml file, OR you can set them directly here.
+          # The app.py script expects these to be set.
+          - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+          - ANYTHINGLLM_SERVER_URL=${ANYTHINGLLM_SERVER_URL}
+          - ANYTHINGLLM_ADMIN_API_KEY=${ANYTHINGLLM_ADMIN_API_KEY}
+          - ANYTHINGLLM_WORKSPACE_SLUG=${ANYTHINGLLM_WORKSPACE_SLUG}
+        # env_file:
+        #   - .env
         restart: unless-stopped
 
     # Define the named volume if you use it.

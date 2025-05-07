@@ -22,6 +22,7 @@ except (ImportError, ModuleNotFoundError): # ModuleNotFoundError is Python 3.6+
         sys.exit(1) # Exit if import still fails
 
 # --- Standard Library Imports ---
+import sys
 import json
 import time
 import random

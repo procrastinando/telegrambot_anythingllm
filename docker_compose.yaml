@@ -5,6 +5,7 @@ services:
     image: procrastinando/pgche_bot:latest # Example image name and tag
     container_name: pgche_bot_container
     environment:
+      - PYTHONUNBUFFERED="1" # <--- ADD THIS LINE
       # These variables will be sourced from a .env file in the same directory
       # as this docker-compose.yml file, OR you can set them directly here.
       # The app.py script expects these to be set.
