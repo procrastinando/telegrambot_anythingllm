@@ -1,0 +1,17 @@
+services:
+  pgche_telegrambot:
+    build:
+      context: https://github.com/procrastinando/telegrambot_anythingllm.git#main 
+    image: procrastinando/pgche_bot:latest # Example image name and tag
+    container_name: pgche_bot_container
+    environment:
+      # These variables will be sourced from a .env file in the same directory
+      # as this docker-compose.yml file, OR you can set them directly here.
+      # The app.py script expects these to be set.
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ANYTHINGLLM_SERVER_URL=${ANYTHINGLLM_SERVER_URL}
+      - ANYTHINGLLM_ADMIN_API_KEY=${ANYTHINGLLM_ADMIN_API_KEY}
+      - ANYTHINGLLM_WORKSPACE_SLUG=${ANYTHINGLLM_WORKSPACE_SLUG}
+    # env_file:
+    #   - .env
+    restart: unless-stopped
