@@ -32,6 +32,7 @@ import os # For environment variables (was implicitly used, now explicitly impor
 # --- Configuration from Environment Variables ---
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 ANYTHINGLLM_SERVER_URL = os.environ.get("ANYTHINGLLM_SERVER_URL")
+ANYTHINGLLM_SERVER_EXTERNAL = os.environ.get("ANYTHINGLLM_SERVER_EXTERNAL")
 ANYTHINGLLM_ADMIN_API_KEY = os.environ.get("ANYTHINGLLM_ADMIN_API_KEY")
 ANYTHINGLLM_WORKSPACE_SLUG = os.environ.get("ANYTHINGLLM_WORKSPACE_SLUG")
 WELCOME_MESSAGE = os.environ.get("WELCOME_MESSAGE")
@@ -41,6 +42,8 @@ if not TELEGRAM_BOT_TOKEN:
     raise ValueError("TELEGRAM_BOT_TOKEN environment variable not set.")
 if not ANYTHINGLLM_SERVER_URL:
     raise ValueError("ANYTHINGLLM_SERVER_URL environment variable not set.")
+if not ANYTHINGLLM_SERVER_EXTERNAL:
+    raise ValueError("ANYTHINGLLM_SERVER_EXTERNAL environment variable not set.")
 if not ANYTHINGLLM_ADMIN_API_KEY:
     raise ValueError("ANYTHINGLLM_ADMIN_API_KEY environment variable not set.")
 if not ANYTHINGLLM_WORKSPACE_SLUG:
@@ -227,7 +230,7 @@ def handle_update(update):
         if current_pgcerthe_user_id:
             send_telegram_message(chat_id, "It looks like you already have a PGCertHE 2025 account!")
             add_user_to_anythingllm_workspace(current_pgcerthe_user_id, ANYTHINGLLM_WORKSPACE_SLUG)
-            workspace_link = f"{ANYTHINGLLM_SERVER_URL}"
+            workspace_link = f"{ANYTHINGLLM_SERVER_EXTERNAL}"
             
             parts = [
                 escape_markdown_v2(f"Your PGCertHE 2025 username is: {telegram_id_str}"),
@@ -247,7 +250,7 @@ def handle_update(update):
                 known_users_anythingllm_ids[chat_id] = new_llm_id # Update cache
                 current_pgcerthe_user_id = new_llm_id # For consistency if needed later in this block
                 added_to_workspace = add_user_to_anythingllm_workspace(current_pgcerthe_user_id, ANYTHINGLLM_WORKSPACE_SLUG)
-                workspace_link = f"{ANYTHINGLLM_SERVER_URL}"
+                workspace_link = f"{ANYTHINGLLM_SERVER_EXTERNAL}"
                 
                 escaped_password = escape_markdown_v2(password)
 

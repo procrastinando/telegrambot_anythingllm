@@ -44,6 +44,7 @@ The bot's functionality relies on the following files within the [procrastinando
     ```env
     TELEGRAM_BOT_TOKEN=your_actual_telegram_bot_token
     ANYTHINGLLM_SERVER_URL=http://your_anythingllm_ip_or_hostname:3001
+    ANYTHINGLLM_SERVER_EXTERNAL=https://chat.domain.com
     ANYTHINGLLM_ADMIN_API_KEY=your_actual_admin_api_key
     ANYTHINGLLM_WORKSPACE_SLUG=your_target_workspace_slug
     WELCOME_MESSAGE="Welcome to the PGCertHE 2025 Assistant! Type /start to begin."
@@ -66,7 +67,8 @@ The bot's functionality relies on the following files within the [procrastinando
           # as this docker-compose.yml file, OR you can set them directly here.
           # The app.py script expects these to be set.
           - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-          - ANYTHINGLLM_SERVER_URL=${ANYTHINGLLM_SERVER_URL}
+          - ANYTHINGLLM_SERVER_URL=${ANYTHINGLLM_SERVER_EXTERNAL}
+          - ANYTHINGLLM_SERVER_EXTERNAL=${ANYTHINGLLM_SERVER_EXTERNAL}
           - ANYTHINGLLM_ADMIN_API_KEY=${ANYTHINGLLM_ADMIN_API_KEY}
           - ANYTHINGLLM_WORKSPACE_SLUG=${ANYTHINGLLM_WORKSPACE_SLUG}
         # env_file:
