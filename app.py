@@ -244,6 +244,7 @@ def handle_update(update):
             send_telegram_message(chat_id, response_text, parse_mode="MarkdownV2")
         else:
             send_telegram_message(chat_id, "Welcome! Creating your PGCertHE 2025 account...")
+            send_telegram_message(chat_id, str(WELCOME_MESSAGE))
             new_llm_id, password = create_anythingllm_user(chat_id, first_name, language_code)
 
             if new_llm_id and password:
@@ -270,7 +271,6 @@ def handle_update(update):
                 
                 response_text = "".join(parts)
                 send_telegram_message(chat_id, response_text, parse_mode="MarkdownV2")
-                send_telegram_message(chat_id, WELCOME_MESSAGE, parse_mode="MarkdownV2")
             else:
                 send_telegram_message(chat_id, "Sorry, there was an error creating your PGCertHE 2025 account. Please try again later or contact an admin.")
 
