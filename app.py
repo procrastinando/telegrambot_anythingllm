@@ -33,6 +33,7 @@ TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 ANYTHINGLLM_SERVER_URL = os.environ.get("ANYTHINGLLM_SERVER_URL")
 ANYTHINGLLM_ADMIN_API_KEY = os.environ.get("ANYTHINGLLM_ADMIN_API_KEY")
 ANYTHINGLLM_WORKSPACE_SLUG = os.environ.get("ANYTHINGLLM_WORKSPACE_SLUG")
+WELCOME_MESSAGE = os.environ.get("WELCOME_MESSAGE")
 
 # --- Validate Essential Configuration ---
 if not TELEGRAM_BOT_TOKEN:
@@ -265,6 +266,7 @@ def handle_update(update):
                 
                 response_text = "".join(parts)
                 send_telegram_message(chat_id, response_text, parse_mode="MarkdownV2")
+                send_telegram_message(chat_id, WELCOME_MESSAGE, parse_mode="MarkdownV2")
             else:
                 send_telegram_message(chat_id, "Sorry, there was an error creating your PGCertHE 2025 account. Please try again later or contact an admin.")
 
@@ -295,9 +297,6 @@ def handle_update(update):
 if __name__ == "__main__":
     print("Bot starting...")
     print("Please set the bot's description/welcome message manually in BotFather on Telegram with the following text:")
-    print("---")
-    print("My project focuses on enhancing student learning through **Retrieval-Augmented Generation (RAG)** and a tailored **mobile application**. RAG enables dynamic content creation by retrieving relevant information and generating personalized explanations, while the app delivers interactive, adaptive lessons. This combination supports real-time feedback, customized learning paths, and data-driven insights, fostering engagement and deeper understanding. By integrating AI-driven tools, the project aims to optimize educational outcomes, promote inclusivity, and empower students with flexible, responsive learning experiences.")
-    print("\nBy tapping **/start** you will be given a PGCertHE 2025 account to have access to the PGCertHE LLM assistant.")
     print("---")
 
     last_update_id = 0
